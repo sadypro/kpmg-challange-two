@@ -2,6 +2,7 @@ import boto3
 from itertools import islice
 import argparse
 
+#Argument Parsing 
 parser = argparse.ArgumentParser()
 parser.add_argument("-id","--instance_id",
                     help="Instance id of machine")
@@ -15,8 +16,12 @@ args = parser.parse_args()
 id=args.instance_id
 key=args.metadata_key
 profile=args.profile
+
+# Create session 
 session = boto3.Session(profile_name=profile)
 ec2 = session.client('ec2')
+
+#Instance Metadata retrival
 response = ec2.describe_instance_attribute(Attribute=key ,InstanceId=id)
 t = list(response.items())
 print(t[1])
